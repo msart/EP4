@@ -1,11 +1,11 @@
-public class GeoInto {
+public class GeoInfo {
      private ST<int, Location> st;
      
-     public GeoInto() {
+     public GeoInfo() {
          this.st = new ST<int, Location>;
      }
      
-     public GeoInto(int id, Location l) {
+     public GeoInfo(int id, Location l) {
          this.st = new ST<int, Location>;
          st.put(id, l);
      }
