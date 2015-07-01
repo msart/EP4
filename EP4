@@ -1,16 +1,28 @@
 public class EP4 {
-    public void main(String[] args) {
-        String fileMap = args[0];
+    public static void main(String[] args) {
+        StdOut.println("OK");
+        String fileXML = args[0];
         String fileAdjList = args[1];
         
-        SymbolGeoEWDigraph gps = new SymbolGeoEWDigraph(fileMap);
+        SymbolGeoEWDigraph gps = new SymbolGeoEWDigraph(fileXML, fileAdjList);
+        
         StdDraw.setCanvasSize();
         
-        while (true) {
+        while (StdIn.hasNextLine()) {
             String[] command = StdIn.readLine().split(" ");
             
             // desenhar o mapa a partir dos pontos inferior esquerdo e superior direito;
-            if (command[0] == "-draw") { 
-                StdDraw.setXscale(command[2], command[4]); // longitudes;
-                StdDraw.sexyscale(command[1], command[3]); // latitudes;
-            
+            if (command[0].equals("draw")) {
+                Location lower = new Location(Double.parseDouble(command[1]), Double.parseDouble(command[2]));
+                Location upper = new Location(Double.parseDouble(command[3]), Double.parseDouble(command[4]));
+                StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
+                StdDraw.setYscale(lower.latitude(), upper.latitude()); // latitudes;
+                for (double node : gps.locations().nodes()) {
+                    Location location = gps.locations().get(node);
+                    if (location.interval(lower, upper))
+                        StdDraw.point(location.longitude(), location.latitude());
+                }
+            }
+        }
+    }
+}
