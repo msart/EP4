@@ -16,14 +16,13 @@ public class Location {
         else return false;
     }
     
+    public boolean interval(Location loc1, Location loc2) {
+        if (latitude >= loc1.latitude() && latitude <= loc2.latitude() && longitude >= loc1.longitude() && longitude <= loc2.longitude()) return true;
+        return false;
+    }
+   
     public double distance(Location that){
-        double theta = this.longitude() - that.longitude();
-        double dist = Math.sin(deg2rad(this.longitude())) * Math.sin(deg2rad(that.longitude())) + Math.cos(deg2rad(this.longitude())) * Math.cos(deg2rad(that.longitude())) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        dist = dist * 1.609344; // ta em kilmetros, achei na net esse metodo
-         return (dist);
+        return(Math.sqrt(Math.pow((this.latitude - that.latitude), 2) + Math.pow((this.longitude - that.longitude), 2)));
     }
 
     public String toString() {
