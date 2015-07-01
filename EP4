@@ -1,0 +1,16 @@
+public class EP4 {
+    public void main(String[] args) {
+        String fileMap = args[0];
+        String fileAdjList = args[1];
+        
+        SymbolGeoEWDigraph gps = new SymbolGeoEWDigraph(fileMap);
+        StdDraw.setCanvasSize();
+        
+        while (true) {
+            String[] command = StdIn.readLine().split(" ");
+            
+            // desenhar o mapa a partir dos pontos inferior esquerdo e superior direito;
+            if (command[0] == "-draw") { 
+                StdDraw.setXscale(command[2], command[4]); // longitudes;
+                StdDraw.sexyscale(command[1], command[3]); // latitudes;
+            
