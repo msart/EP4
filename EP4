@@ -12,6 +12,8 @@ public class EP4 {
             
             // desenhar o mapa a partir dos pontos inferior esquerdo e superior direito;
             if (command[0].equals("draw")) {
+                StdDraw.clear();
+                StdDraw.setPenColor();
                 Location lower = new Location(Double.parseDouble(command[1]), Double.parseDouble(command[2]));
                 Location upper = new Location(Double.parseDouble(command[3]), Double.parseDouble(command[4]));
                 StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
@@ -35,7 +37,53 @@ public class EP4 {
                 }
                 
             }
+            if (command[0].equals("zoom")) {
+                int pressed = 0;
+                double x1 = 0;
+                double x2 = 0;
+                double y1 = 0;
+                double y2 = 0;
+                while (pressed < 1){
+                    if (StdDraw.mousePressed()) {//ponto inferior
+                        while(StdDraw.mousePressed()){
+                            x1 = StdDraw.mouseX();
+                            y1 = StdDraw.mouseY();
+                        }
+                        pressed ++;
+                    }
+                }
+                while (pressed < 2){
+                    if (StdDraw.mousePressed()) {//ponto inferior
+                        x2 = StdDraw.mouseX();
+                        y2 = StdDraw.mouseY();
+                        pressed ++;
+                    }
+                }
+                StdOut.println(x1 + " " + y1);
+                StdOut.println(x2 + " " + y2);
+                StdDraw.clear();
+                Location lower = new Location(x1, y1);
+                Location upper = new Location(x2, y2);
+                StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
+                StdDraw.setYscale(lower.latitude(), upper.latitude()); // latitudes;
+                
+                // desenhando pontos
+                for (double node : gps.locations().nodes()) {
+                    Location location = gps.locations().get(node);
+                    if (location.interval(lower, upper))
+                        StdDraw.point(location.longitude(), location.latitude());
+                }
+                
+                // desenhando arestas
+                for (DirectedEdge e : gps.map().G().edges()) {
+                    StdDraw.setPenColor();
+                    Location lineFrom = gps.locations().get(Double.parseDouble(gps.map().name(e.from())));
+                    Location lineTo = gps.locations().get(Double.parseDouble(gps.map().name(e.to()))); 
+                    StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
+                    StdDraw.setPenColor(StdDraw.RED);
+                    StdDraw.filledCircle((3*lineTo.longitude() + lineFrom.longitude())/4, (3*lineTo.latitude() + lineFrom.latitude())/4, 0.000025);
+                }
+            }
         }
     }
 }
-            
