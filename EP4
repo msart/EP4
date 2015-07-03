@@ -5,7 +5,7 @@ public class EP4 {
         
         SymbolGeoEWDigraph gps = new SymbolGeoEWDigraph(fileXML, fileAdjList);
         
-        StdDraw.setCanvasSize();
+        StdDraw.setCanvasSize(1000, 1000);
         
         while (StdIn.hasNextLine()) {
             String[] command = StdIn.readLine().split(" ");
@@ -26,10 +26,14 @@ public class EP4 {
                 
                 // desenhando arestas
                 for (DirectedEdge e : gps.map().G().edges()) {
+                    StdDraw.setPenColor();
                     Location lineFrom = gps.locations().get(Double.parseDouble(gps.map().name(e.from())));
                     Location lineTo = gps.locations().get(Double.parseDouble(gps.map().name(e.to()))); 
                     StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
+                    StdDraw.setPenColor(StdDraw.RED);
+                    StdDraw.filledCircle((3*lineTo.longitude() + lineFrom.longitude())/4, (3*lineTo.latitude() + lineFrom.latitude())/4, 0.000025);
                 }
+                
             }
         }
     }
