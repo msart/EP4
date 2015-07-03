@@ -1,6 +1,6 @@
 if(StdDraw.mousePressed()) {//ponto inferior
-    double x1 = StdDraw.mouseX()
-        double y1 = StdDraw.mouseY();
+    double x1 = StdDraw.mouseX();   
+    double y1 = StdDraw.mouseY();
     if(StdDraw.mousePressed()) {//ponto superior
         StdDraw.setXscale(x1, StdDraw.mouseX());
         StdDraw.setYscale(y1, StdDraw.mousey()); 
