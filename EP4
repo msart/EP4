@@ -1,6 +1,5 @@
 public class EP4 {
     public static void main(String[] args) {
-        StdOut.println("OK");
         String fileXML = args[0];
         String fileAdjList = args[1];
         
@@ -17,12 +16,22 @@ public class EP4 {
                 Location upper = new Location(Double.parseDouble(command[3]), Double.parseDouble(command[4]));
                 StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
                 StdDraw.setYscale(lower.latitude(), upper.latitude()); // latitudes;
+                
+                // desenhando pontos
                 for (double node : gps.locations().nodes()) {
                     Location location = gps.locations().get(node);
                     if (location.interval(lower, upper))
                         StdDraw.point(location.longitude(), location.latitude());
                 }
+                
+                // desenhando arestas
+                for (DirectedEdge e : gps.map().G().edges()) {
+                    Location lineFrom = gps.locations().get(Double.parseDouble(gps.map().name(e.from())));
+                    Location lineTo = gps.locations().get(Double.parseDouble(gps.map().name(e.to()))); 
+                    StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
+                }
             }
         }
     }
 }
+            
