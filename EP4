@@ -5,7 +5,7 @@ public class EP4 {
         
         SymbolGeoEWDigraph gps = new SymbolGeoEWDigraph(fileXML, fileAdjList);
         
-        StdDraw.setCanvasSize(1000, 1000);
+        StdDraw.setCanvasSize(600, 600);
         
         while (StdIn.hasNextLine()) {
             String[] command = StdIn.readLine().split(" ");
@@ -59,11 +59,10 @@ public class EP4 {
                         pressed ++;
                     }
                 }
-                StdOut.println(y1 + " " + x1);
-                StdOut.println(y2 + " " + x2);
                 StdDraw.clear();
                 Location lower = new Location(y1, x1);
                 Location upper = new Location(y2, x2);
+                StdDraw.setPenColor();
                 StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
                 StdDraw.setYscale(lower.latitude(), upper.latitude()); // latitudes;
                 
