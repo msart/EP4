@@ -3,8 +3,9 @@ public class SymbolGeoEWDigraph {
     private GeoInfo gi;
     
     public SymbolGeoEWDigraph(String fileXML, String fileAdjList) {
-        gi = new GeoInfo(fileXML);
-        sewd = new SymbolEWDigraph(fileAdjList, " ", gi);
+        sewd = new SymbolEWDigraph(fileAdjList, " ");
+        gi = new GeoInfo(fileXML, sewd);
+        sewd.createDigraph(fileAdjList, " ", gi);
     }
     
     public SymbolEWDigraph map() {
