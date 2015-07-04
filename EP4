@@ -23,7 +23,7 @@ public class EP4 {
                 for (double node : gps.locations().nodes()) {
                     Location location = gps.locations().get(node);
                     if (location.interval(lower, upper))
-                        StdDraw.point(location.longitude(), location.latitude());
+                        StdDraw.filledCircle(location.longitude(), location.latitude(), 0.000025);
                 }
                 
                 // desenhando arestas
@@ -40,8 +40,8 @@ public class EP4 {
             if (command[0].equals("update")) {
                 StdDraw.clear();
                 StdDraw.setPenColor();
-                Location lower = new Location(Double.parseDouble(command[2]), Double.parseDouble(command[3]));
-                Location upper = new Location(Double.parseDouble(command[4]), Double.parseDouble(command[5]));
+                Location lower = new Location(Double.parseDouble(command[2]), Double.parseDouble(command[2]));
+                Location upper = new Location(Double.parseDouble(command[3]), Double.parseDouble(command[4]));
                 StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
                 StdDraw.setYscale(lower.latitude(), upper.latitude()); // latitudes;
                 
@@ -49,34 +49,85 @@ public class EP4 {
                 for (double node : gps.locations().nodes()) {
                     Location location = gps.locations().get(node);
                     if (location.interval(lower, upper))
-                        StdDraw.point(location.longitude(), location.latitude());
+                        StdDraw.filledCircle(location.longitude(), location.latitude(), 0.000025);
                 }
                 
                 if (!command[1].equals("--noedges")) {
                     for (DirectedEdge e : gps.map().G().edges()) {
-                        StdDraw.setPenColor();
-                        Location lineFrom = gps.locations().get(Double.parseDouble(gps.map().name(e.from())));
-                        Location lineTo = gps.locations().get(Double.parseDouble(gps.map().name(e.to()))); 
-                        StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
-                        StdDraw.setPenColor(StdDraw.RED);
-                        StdDraw.filledCircle((3*lineTo.longitude() + lineFrom.longitude())/4, (3*lineTo.latitude() + lineFrom.latitude())/4, 0.000025);
+                    StdDraw.setPenColor();
+                    Location lineFrom = gps.locations().get(Double.parseDouble(gps.map().name(e.from())));
+                    Location lineTo = gps.locations().get(Double.parseDouble(gps.map().name(e.to()))); 
+                    StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
+                    StdDraw.setPenColor(StdDraw.RED);
+                    StdDraw.filledCircle((3*lineTo.longitude() + lineFrom.longitude())/4, (3*lineTo.latitude() + lineFrom.latitude())/4, 0.000025);
                     }
                 }
             }
             
             if (command[0].equals("path")) {
-                int s = gps.map().index(command[1]);
-                int t = gps.map().index(command[2]);    
-                DijkstraSP sp = new DijkstraSP(gps.map().G(), s);
-                if (sp.hasPathTo(t)) {
-                    StdOut.printf("(%.2f)", sp.distTo(t));
-                    if (sp.hasPathTo(t)) {
-                        for (DirectedEdge e : sp.pathTo(t)) {
-                        StdDraw.setPenColor(BLUE);
+                Location origin;
+                Location destination;
+                if (command[1].equals("--mouse")) {
+                    int pressed = 0;
+                    double x1 = 0;
+                    double x2 = 0;
+                    double y1 = 0;
+                    double y2 = 0;
+                    
+                    // ponto de origem
+                    while (pressed < 1){
+                        if (StdDraw.mousePressed()) {
+                            while(StdDraw.mousePressed()){
+                                x1 = StdDraw.mouseX();
+                                y1 = StdDraw.mouseY();
+                            }
+                            pressed ++;
+                        }
+                    }
+                    
+                    // ponto de destino
+                    while (pressed < 2){
+                        if (StdDraw.mousePressed()) {
+                            while(StdDraw.mousePressed()){
+                                x2 = StdDraw.mouseX();
+                                y2 = StdDraw.mouseY();
+                                pressed ++;
+                            }
+                        }
+                    }
+                    origin = new Location(y1, x1);
+                    destination = new Location(y2, x2);
+                }
+                else { // else ainda não está pronto
+                    origin = new Location(0,0);
+                    destination = new Location(0,0);
+                }
+                
+                Double minOriginDist = 40075.0; // comprimento da linha do Equador (em kilômetros)
+                Double minDestinationDist = 40075.0;
+                Double nodeOrigin = 0.0;
+                Double nodeDestination = 0.0;
+                for (Double nodeCurrent : gps.locations().nodes()) {
+                    Location locationCurrent = gps.locations().get(nodeCurrent);
+                    if (locationCurrent.distance(origin) < minOriginDist) {
+                        nodeOrigin = nodeCurrent;
+                        minOriginDist = locationCurrent.distance(origin);
+                    }
+                    if (locationCurrent.distance(destination) < minDestinationDist) {
+                        nodeDestination = nodeCurrent;
+                        minDestinationDist = locationCurrent.distance(destination);
+                    }
+                }
+                StdOut.println(gps.map().contains(nodeOrigin.toString()));
+                int nodeFrom = gps.map().index(nodeOrigin.toString());
+                int nodeTo = gps.map().index(nodeDestination.toString());
+                DijkstraSP shortestPath = new DijkstraSP(gps.map().G(), nodeFrom);
+                if (shortestPath.hasPathTo(nodeTo)) {
+                    for (DirectedEdge e : shortestPath.pathTo(nodeTo)) {
+                        StdDraw.setPenColor(StdDraw.BLUE);
                         Location lineFrom = gps.locations().get(Double.parseDouble(gps.map().name(e.from())));
                         Location lineTo = gps.locations().get(Double.parseDouble(gps.map().name(e.to()))); 
                         StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
-                        }
                     }
                 }
             }
