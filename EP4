@@ -98,12 +98,12 @@ public class EP4 {
                     origin = new Location(y1, x1);
                     destination = new Location(y2, x2);
                 }
-                else { // else ainda não está pronto
+                else { // else ainda nÃ£o estÃ¡ pronto
                     origin = new Location(0,0);
                     destination = new Location(0,0);
                 }
                 
-                Double minOriginDist = 40075.0; // comprimento da linha do Equador (em kilômetros)
+                Double minOriginDist = 40075.0; // comprimento da linha do Equador (em kilÃ´metros)
                 Double minDestinationDist = 40075.0;
                 String nodeOrigin = "";
                 String nodeDestination = "";
@@ -122,6 +122,7 @@ public class EP4 {
                 int nodeTo = gps.map().index(nodeDestination.toString());
                 DijkstraSP shortestPath = new DijkstraSP(gps.map().G(), nodeFrom);
                 if (shortestPath.hasPathTo(nodeTo)) {
+                    StdOut.println("Distancia : " + shortestPath.distTo(nodeTo));
                     for (DirectedEdge e : shortestPath.pathTo(nodeTo)) {
                         StdDraw.setPenColor(StdDraw.BLUE);
                         Location lineFrom = gps.locations().get(gps.map().name(e.from()));
@@ -129,6 +130,7 @@ public class EP4 {
                         StdDraw.line(lineFrom.longitude(), lineFrom.latitude(), lineTo.longitude(), lineTo.latitude());
                     }
                 }
+                else  StdOut.println("Não existe caminho");
             }
         }
     }
