@@ -3,7 +3,7 @@ public class SymbolEWDigraph {
     private String[] keys;           // index  -> string
     private EdgeWeightedDigraph G;
     
-     public SymbolEWDigraph(String filename, String delimiter, GeoInfo locations) {
+     public SymbolEWDigraph(String filename, String delimiter) {
         st = new ST<String, Integer>();
 
         // First pass builds the index by reading strings to associate
@@ -17,13 +17,16 @@ public class SymbolEWDigraph {
             }
         }
 
-        // inverted index to get string keys in an aray
+        // inverted index to get string keys in an array
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
         }
+     }
+     
+     public void createDigraph(String filename, String delimiter, GeoInfo locations) {
         G = new EdgeWeightedDigraph(st.size());
-        in = new In(filename);
+        In in = new In(filename);
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(delimiter);
             int v = st.get(a[0]);
