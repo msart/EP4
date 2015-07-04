@@ -40,8 +40,8 @@ public class EP4 {
             if (command[0].equals("update")) {
                 StdDraw.clear();
                 StdDraw.setPenColor();
-                Location lower = new Location(Double.parseDouble(command[2]), Double.parseDouble(command[2]));
-                Location upper = new Location(Double.parseDouble(command[3]), Double.parseDouble(command[4]));
+                Location lower = new Location(Double.parseDouble(command[2]), Double.parseDouble(command[3]));
+                Location upper = new Location(Double.parseDouble(command[4]), Double.parseDouble(command[5]));
                 StdDraw.setXscale(lower.longitude(), upper.longitude()); // longitudes;
                 StdDraw.setYscale(lower.latitude(), upper.latitude()); // latitudes;
                 
