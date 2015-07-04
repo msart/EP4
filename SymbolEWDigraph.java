@@ -32,7 +32,7 @@ public class SymbolEWDigraph {
             int v = st.get(a[0]);
             for (int i = 1; i < a.length; i++) {
                 int w = st.get(a[i]);
-                double weight = (locations.get(Double.parseDouble(a[0]))).distance(locations.get(Double.parseDouble(a[i])));
+                double weight = (locations.get(a[0])).distance(locations.get(a[i]));
                 G.addEdge(new DirectedEdge(v, w, weight));
             }
         }
