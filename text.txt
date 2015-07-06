@@ -1,0 +1,14 @@
+run EP4 map.osm-USP.xml USP.adjlist.txt
+draw -23.5651000 -46.7425000 -23.5523000 -46.7207000
+path --mouse
+clear
+path -23.561324 -46.73632333333333 -23.557270666666668 -46.731273
+update --edges -23.561324 -46.73632333333333 -23.557270666666668 -46.731273
+update --noedges -23.5651000 -46.7425000 -23.5523000 -46.7207000
+
+primeiro comando desenhara o mapa
+segundo você clicará no ponto de origin e destino e ele lhe mostrará o caminho
+terceiro ele vai limparo caminho mostrado
+quarto ele vai te dar um caminho por coordenadas e não mouse
+depois um zoom in com arestas
+e depois um zoom out sem arestas
