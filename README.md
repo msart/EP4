@@ -1,3 +1,3 @@
-# EP4
- no SymbolEWDigraph.java tem q olhar como montar se ta certo, eu basicamente editei a otura pra ser EdgeWeightedDigraph
- porém falta calcular a distancia dado q tenho dois nodes.
+Grupo: Gustavo Rodrigues Cayres Silva - 8584323
+       Pedro Marcondes                - 8941168
+EP4 - MAC323
