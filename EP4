@@ -93,7 +93,7 @@ public class EP4 {
         int nodeTo = gps.map().index(nodeDestination.toString());
         DijkstraSP shortestPath = new DijkstraSP(gps.map().G(), nodeFrom);
         if (shortestPath.hasPathTo(nodeTo)) {
-            StdOut.printf("Distancia : (%.2f)km\n", shortestPath.distTo(nodeTo));
+            StdOut.printf("Distancia : %.2f km\n", shortestPath.distTo(nodeTo));
             for (DirectedEdge e : shortestPath.pathTo(nodeTo)) {
                 StdDraw.setPenRadius(0.004);
                 StdDraw.setPenColor(StdDraw.BLUE);
@@ -139,6 +139,15 @@ public class EP4 {
         String fileXML = args[0];
         String fileAdjList = args[1]; 
         EP4 screen = new EP4(fileXML, fileAdjList);
+        
+        StdOut.println("O programa entrará em modo interativo, os comandos são:");
+        StdOut.println("draw par lat/long inferior par lat/long superior. Esse comando desenhará o mapa, sendo o par inferior o limite inferior e esquerdo, o par superior o inverso");
+        StdOut.println("update (--edges/--noedges) par lat/long inferior par lat/long superior, com esse comando você pode tirar as arestas, dar zoom in, ou zoom out");
+        StdOut.println("path --mouse, apos esse comando clique no ponto de origem e depois no de destino e ele mostrara o caminho minimo e a distancia, ou avisara que nao possui caminho");
+        StdOut.println("path par lat/long par lat long, sendo o primeiro par a origem e o segundo destino");
+        StdOut.println("clear, que limpa a imagem dos caminhos impressos");
+        StdOut.println("Junto com o programa tem um arquivo chamado test com exemplo pra cada comando");
+        StdOut.println("para encerrar o programa feche o mapa");
        
         while (StdIn.hasNextLine()) {
             String[] command = StdIn.readLine().split(" ");
@@ -206,4 +215,3 @@ public class EP4 {
         }
     }
 }
-
