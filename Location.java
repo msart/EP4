@@ -21,9 +21,9 @@ public class Location {
         return false;
     }
    
-    // calculo da distância, aproximando a região por um plano (em kilometros);
+    // calculo da distÃ¢ncia, aproximando a regiÃ£o por um plano (em kilometros);
     public double distance(Location that){
-        return (Math.sqrt(Math.pow((this.latitude - that.latitude), 2) + Math.pow((this.longitude - that.longitude), 2)))*1.852;
+        return (Math.sqrt(Math.pow((this.latitude - that.latitude), 2) + Math.pow((this.longitude - that.longitude), 2)))*1852*0.06;
     }
 
     public String toString() {
